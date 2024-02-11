@@ -121,5 +121,5 @@ RUN useradd -m user && echo "user:password" | chpasswd
 COPY --chown=user:user ./examples /home/user/examples
 RUN chmod -R +x  /home/user/examples/lua
 RUN echo 'root:password' | chpasswd
-CMD ["R", "-e", "install.packages(c('fastverse','openxlsx','openxlsx2','eurodata','shiny','tidyverse'))"]
+CMD ["R", "-e", "install.packages(c('fastverse','openxlsx2','eurodata'))"]
 CMD [ "/bin/bash" ]
