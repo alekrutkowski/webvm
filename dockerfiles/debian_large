@@ -503,7 +503,6 @@ RUN apt-get update && apt-get -y upgrade && \
 	r-cran-rio \
 	r-cran-ritis \
 	r-cran-rjags \
-	r-cran-rjava \
 	r-cran-rjson \
 	r-cran-rlang \
 	r-cran-rlist \
