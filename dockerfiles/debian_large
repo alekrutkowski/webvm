@@ -1046,27 +1046,18 @@ RUN apt-get update && apt-get -y upgrade && \
 	r-cran-viridis \
 	r-cran-viridislite \
 	r-cran-vroom \
-	r-cran-waldo \
-	r-cran-warp \
 	r-cran-waveslim \
 	r-cran-wavethresh \
 	r-cran-wdi \
-	r-cran-webfakes \
-	r-cran-webgestaltr \
 	r-cran-webmockr \
 	r-cran-webshot \
 	r-cran-webutils \
-	r-cran-wgcna \
 	r-cran-whatif \
 	r-cran-whisker \
-	r-cran-whoami \
-	r-cran-wikidataqueryservicer \
 	r-cran-wikidatar \
 	r-cran-wikipedir \
 	r-cran-wikitaxa \
 	r-cran-withr \
-	r-cran-wk \
-	r-cran-wkutils \
 	r-cran-wordcloud \
 	r-cran-worrms \
 	r-cran-xfun \
@@ -1077,7 +1068,6 @@ RUN apt-get update && apt-get -y upgrade && \
 	r-cran-xtable \
 	r-cran-xts \
 	r-cran-yaml \
-	r-cran-zeallot \
 	r-cran-zelig \
 	r-cran-zeligchoice \
 	r-cran-zeligei \
