@@ -6,12 +6,8 @@ RUN apt-get -y install apt-utils gcc \
 	fakeroot dbus base whiptail hexedit \
 	patch wamerican ucf manpages \
 	file luajit make lua50 dialog curl \
-	less cowsay netcat-openbsd \
-	r-base \
-	r-cran-data.table \
-	r-cran-ggplot2 \
-	r-cran-magrittr \
-	r-cran-openxlsx
+	less netcat-openbsd \
+	r-base
 	
 RUN useradd -m user && echo "user:password" | chpasswd
 COPY --chown=user:user ./examples /home/user/examples
@@ -21,5 +17,4 @@ WORKDIR /home/user/
 # We set env, as this gets extracted by Webvm. This is optional.
 ENV HOME="/home/user" TERM="xterm" USER="user" SHELL="/bin/bash" EDITOR="vim" LANG="en_US.UTF-8" LC_ALL="C"
 RUN echo 'root:password' | chpasswd
-CMD ["R", "-e", "install.packages(c('fastverse','openxlsx2','eurodata'))"]
 CMD [ "/bin/bash" ]
