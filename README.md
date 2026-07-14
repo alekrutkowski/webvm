@@ -5,7 +5,7 @@
 ▶ You can run the VM via https://alekrutkowski.github.io/webvm/
 
 🖧 To enable internet access:
-- install a free Tailscale app (https://tailscale.com/download) on some other device (PC, smartphone, etc.) with intrnet access,
+- install a free Tailscale app (https://tailscale.com/download) on some other device (PC, smartphone, etc.) with internet access,
 - in the Tailscale app on that other device, run "exit node",
 - in the Tailscale "admin console" (https://login.tailscale.com/admin/machines), find that other device, click on the three horizontal dots (...), then 'Edit route setting", and then tick next to "Use as exit node",
 - in the VM, click on "Connect via Tailscale" at the top, log in to Tailscale, and then click "Connect".
