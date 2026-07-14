@@ -80,7 +80,7 @@ function registerNetworkLogin(cx, { authKey, statusElem, loginElem, loginElemUrl
             statusElem.innerHTML = "Downloading network code...";
             const w = window.open("login.html", "_blank");
             async function waitLogin() {
-                await cx.networkLogin();
+                cx.networkLogin();
                 statusElem.innerHTML = "Starting login...";
                 const url = await loginPromise;
                 statusElem.innerHTML = "Login URL ready...";
