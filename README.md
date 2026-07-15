@@ -1,3 +1,19 @@
+# Virtual Machine for the Web (WASM emulator of x86 Debian)
+
+### This fork includes R 4.5.0 (https://www.r-project.org/) preinstalled
+
+▶ You can run the VM via https://alekrutkowski.github.io/webvm/
+
+🖧 To enable internet access:
+- install a free Tailscale app (https://tailscale.com/download) on some other device (PC, smartphone, etc.) with internet access,
+- in the Tailscale app on that other device, run "exit node",
+- in the Tailscale "admin console" (https://login.tailscale.com/admin/machines), find that other device, click on the three horizontal dots (...), then 'Edit route setting", and then tick next to "Use as exit node",
+- in the WebVM, click on Wi-Fi icon and "Connect via Tailscale" on the left side, log in to Tailscale, and then click "Connect".
+
+If the whole procedure is successful, you will see your IP address at the top of the VM.
+
+# --- ORIGNAL README BELOW ---
+
 # WebVM
 
 [![Discord server](https://img.shields.io/discord/988743885121548329?color=%235865F2&logo=discord&logoColor=%23fff)](https://discord.gg/yWRr2YnD9c)
