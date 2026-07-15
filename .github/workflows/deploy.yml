@@ -155,14 +155,45 @@ jobs:
          # Mount the ext2 image to modify it
          sudo mount -o loop -t ext2 ${IMAGE_NAME} /mnt/
 
-      # We opt for 'docker cp --archive' over 'docker save' since our focus is solely on the end product rather than individual layers and metadata.
-      # However, it's important to note that despite being specified in the documentation, the '--archive' flag does not currently preserve uid/gid information when copying files from the container to the host machine.
-      # Another compelling reason to use 'docker cp' is that it preserves resolv.conf.
-      - name: Export and unpack container filesystem contents into mounted ext2 image.
-        run: | 
-          sudo docker cp -a ${CONTAINER_ID}:/ /mnt/
+      # docker cp preserves the container's generated resolv.conf and file modes, but
+      # ownership can be flattened while copying to the host. WebVM launches the guest
+      # process as UID/GID 1000, so restore and verify the writable home directory before
+      # unmounting the ext2 image.
+      - name: Export, repair ownership, and verify the ext2 image.
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+
+          cleanup() {
+            if mountpoint -q /mnt/; then
+              sudo umount /mnt/ || true
+            fi
+          }
+          trap cleanup EXIT
+
+          sudo docker cp -a "${CONTAINER_ID}":/ /mnt/
+
+          vm_uid="$(awk -F: '$1 == "user" { print $3; exit }' /mnt/etc/passwd)"
+          vm_gid="$(awk -F: '$1 == "user" { print $4; exit }' /mnt/etc/passwd)"
+
+          if [[ "${vm_uid}:${vm_gid}" != "1000:1000" ]]; then
+            echo "::error title=Unexpected WebVM user ID::Expected user to be 1000:1000, got ${vm_uid}:${vm_gid}"
+            exit 1
+          fi
+
+          sudo chown -R "${vm_uid}:${vm_gid}" /mnt/home/user
+          sudo chmod 0755 /mnt/home/user
+
+          actual_owner="$(sudo stat -c '%u:%g' /mnt/home/user)"
+          actual_mode="$(sudo stat -c '%a' /mnt/home/user)"
+          if [[ "${actual_owner}" != "${vm_uid}:${vm_gid}" || "${actual_mode}" != "755" ]]; then
+            echo "::error title=Unwritable WebVM home::Expected ${vm_uid}:${vm_gid} mode 755, got ${actual_owner} mode ${actual_mode}"
+            exit 1
+          fi
+
           sudo umount /mnt/
-      # Result is an ext2 image for webvm.
+          trap - EXIT
+      # Result is an ext2 image with /home/user writable by the WebVM process.
 
       # The .txt suffix enabled HTTP compression for free
       - name: Generate image split chunks and .meta file
